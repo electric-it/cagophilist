@@ -1,0 +1,21 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "plugins": [
+    "import",
+    "promise"
+  ],
+  "rules": {
+    "strict": 0,
+    "quotes": ["error", "single"],
+    "no-console": 0,
+    "max-len": 0,
+    "react/require-extension": 0,
+    "prefer-rest-params": 0,
+    "prefer-spread": 0,
+    "no-warning-comments": ["error"]
+  }
+}

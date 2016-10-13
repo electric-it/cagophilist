@@ -1,0 +1,3 @@
+[temp]
+role_arn=arn:aws:iam::123456789012:role/hq/temp-dev-fed
+principal_arn=arn:aws:iam::123456789012:saml-provider/temp-saml-for-aws

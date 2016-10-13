@@ -1,5 +1,3 @@
-[![Build Status](https://travis.power.ge.com/power-cloud/cagophilist.svg?token=9Z1F2j9oezCM6QrgEdiP&branch=master)](https://travis.power.ge.com/power-cloud/cagophilist) [![Coverage Status](http://coveralls.power.ge.com/repos/github/power-cloud/cagophilist/badge.svg?branch=master)](http://coveralls.power.ge.com/github/power-cloud/cagophilist?branch=master)
-
 # Cagophilist
 
 --------------------------------------------------------------------------------
