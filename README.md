@@ -51,19 +51,19 @@ To disable auto copying of the cagophilist source command to the clipboard, add 
       },
       "roles": [{
         "roleArn": "arn:aws:iam::123456789012:role/S3-FullAccess",
-        "principalArn": "arn:aws:iam::123456789012:root/user"
+        "roleSessionName": "MyCorp-S3-FullAccess"
       }, {
         "roleArn": "arn:aws:iam::123456789013:role/S3-ReadOnly",
-        "principalArn": "arn:aws:iam::123456789012:root/user"
+        "roleSessionName": "MyCorp-S3-ReadOnly"
       }, {
         "roleArn": "arn:aws:iam::123456789014:role/EC2-Access",
-        "principalArn": "arn:aws:iam::123456789012:root/user"
+        "roleSessionName": "MyCorp-EC2-Access"
       }, {
         "roleArn": "arn:aws:iam::123456789012:role/Test-Role",
-        "principalArn": "arn:aws:iam::123456789012:root/user"
+        "roleSessionName": "MyCorp-Test-Role"
       }, {
         "roleArn": "arn:aws:iam::123456789015:role/S3-FullAccess",
-        "principalArn": "arn:aws:iam::123456789012:root/user"
+        "roleSessionName": "MyCorp-S3-FullAccess"
       }],
       "accounts": {
         "123456789012": "Production",
