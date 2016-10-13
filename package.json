@@ -21,6 +21,12 @@
     "test-all": "cross-env NODE_ENV=test mocha test/all"
   },
   "author": "GE Power",
+  "contributors": [
+    "Bernie Durfee (https://github.com/berniedurfee-ge)"
+    "Nick Timakondu (https://github.com/nicktimakondu)",
+    "Robert Samson (https://github.com/rjsamson)",
+    "Ilya Shindyapin (https://github.com/license2e)"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
