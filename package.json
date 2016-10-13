@@ -24,7 +24,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.build.ge.com/power-cloud/cagophilist.git"
+    "url": "https://github.com/electric-it/cagophilist.git"
   },
   "dependencies": {
     "aws-sdk": "2.5.6",
