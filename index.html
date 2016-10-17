@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Cagophilist by license2e</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Cagophilist</h1>
+        <h2>A toolbelt for easily managing AWS keys for those that need to switch between roles while using the SDK or CLI.</h2>
+        <a href="https://github.com/license2e/cagophilist" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="cagophilist" class="anchor" href="#cagophilist" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cagophilist</h1>
+
+<hr>
+
+<p><em>1) A collector of or a fondness for collecting keys.</em></p>
+
+<p><em>2) A toolbelt for easily managing AWS keys for those that need to switch between roles while using the SDK or CLI.</em></p>
+
+<p><strong>Important Features:</strong></p>
+
+<ul>
+<li>Configurable menu (friendly account names!)</li>
+<li>Scrolling menu (looks nice!)</li>
+<li>Colors (very nice!)</li>
+<li>Fast switching of active profiles (convenient!)</li>
+<li>One command update of all expired tokens (very convenient!)</li>
+<li>Modular design (works with alternate identity providers!)</li>
+<li>Supports custom plugins (for alternate identity providers!)</li>
+<li>Written in Node (if that's important to you...)</li>
+</ul>
+
+<h1>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h1>
+
+<ol>
+<li>Install node v4.3.2 or above</li>
+<li>Clone this repo and <code>cd /path/to/cagophilist</code>
+</li>
+<li><code>npm i</code></li>
+<li>
+<p>Install or link globally:</p>
+
+<ul>
+<li>Install globally: <code>npm install -g ./</code>
+</li>
+<li>Link globally: <code>npm link</code>
+</li>
+</ul>
+</li>
+<li>
+<p>Add the cagophilist options file: <code>~/.cagorc</code> [see the different settings below]</p>
+
+<ul>
+<li>For Windows users, add the <code>.cagorc</code> file to <code>C:\Users\&lt;your user&gt;\.cagorc</code>
+</li>
+</ul>
+</li>
+</ol>
+
+<h1>
+<a id="configure" class="anchor" href="#configure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configure</h1>
+
+<p>To disable auto copying of the cagophilist source command to the clipboard, add <code>"autocopy": false</code> to the .cagorc config.</p>
+
+<p><strong>Using settings for roles</strong></p>
+
+<div class="highlight highlight-source-json"><pre>    {
+      <span class="pl-s"><span class="pl-pds">"</span>rc_version<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1.1.0<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>autocopy<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
+      <span class="pl-s"><span class="pl-pds">"</span>aws<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>region<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>us-east-1<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>outputFormat<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>json<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>credentialsPath<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>~/.aws/credentials<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>rolesSource<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>settings<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>useHttpsProxy<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>refreshMinutes<span class="pl-pds">"</span></span>: <span class="pl-c1">10</span>
+      },
+      <span class="pl-s"><span class="pl-pds">"</span>roles<span class="pl-pds">"</span></span>: [{
+        <span class="pl-s"><span class="pl-pds">"</span>roleArn<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>arn:aws:iam::123456789012:role/S3-FullAccess<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>roleSessionName<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>MyCorp-S3-FullAccess<span class="pl-pds">"</span></span>
+      }, {
+        <span class="pl-s"><span class="pl-pds">"</span>roleArn<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>arn:aws:iam::123456789013:role/S3-ReadOnly<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>roleSessionName<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>MyCorp-S3-ReadOnly<span class="pl-pds">"</span></span>
+      }, {
+        <span class="pl-s"><span class="pl-pds">"</span>roleArn<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>arn:aws:iam::123456789014:role/EC2-Access<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>roleSessionName<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>MyCorp-EC2-Access<span class="pl-pds">"</span></span>
+      }, {
+        <span class="pl-s"><span class="pl-pds">"</span>roleArn<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>arn:aws:iam::123456789012:role/Test-Role<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>roleSessionName<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>MyCorp-Test-Role<span class="pl-pds">"</span></span>
+      }, {
+        <span class="pl-s"><span class="pl-pds">"</span>roleArn<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>arn:aws:iam::123456789015:role/S3-FullAccess<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>roleSessionName<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>MyCorp-S3-FullAccess<span class="pl-pds">"</span></span>
+      }],
+      <span class="pl-s"><span class="pl-pds">"</span>accounts<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>123456789012<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Production<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>123456789013<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Stage<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>123456789014<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Development<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>123456789015<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>EU Production<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s"><span class="pl-pds">"</span>regions<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>123456789015<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>eu-west-1<span class="pl-pds">"</span></span>
+      }
+    }</pre></div>
+
+<p><strong>Using plugin for roles</strong></p>
+
+<div class="highlight highlight-source-json"><pre>    {
+      <span class="pl-s"><span class="pl-pds">"</span>rc_version<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1.1.0<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>autocopy<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
+      <span class="pl-s"><span class="pl-pds">"</span>aws<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>region<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>us-east-1<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>outputFormat<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>json<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>credentialsPath<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>~/.aws/credentials<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>rolesSource<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>settings<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>useHttpsProxy<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>refreshMinutes<span class="pl-pds">"</span></span>: <span class="pl-c1">10</span>
+      },
+      <span class="pl-s"><span class="pl-pds">"</span>accounts<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>123456789012<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Production<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>123456789013<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Stage<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>123456789014<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Development<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>123456789015<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>EU Production<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s"><span class="pl-pds">"</span>regions<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>123456789015<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>eu-west-1<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s"><span class="pl-pds">"</span>plugins<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>cago-custom-idp<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>cago-custom-idp@1.0.0 --registry https://my.corp.com/artifactory/api/npm/custom-repo<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s"><span class="pl-pds">"</span>config<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>cago-custom-idp<span class="pl-pds">"</span></span>: {
+          <span class="pl-s"><span class="pl-pds">"</span>url<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>... link to my.corp.com identity solution ...<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>targetUrl<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>... link to aws to get roles ...<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>prompt<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>username<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Acct:<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Pass:<span class="pl-pds">"</span></span>
+          }
+        }
+      }
+    }</pre></div>
+
+<h1>
+<a id="custom-plugin-development" class="anchor" href="#custom-plugin-development" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Custom Plugin Development</h1>
+
+<p><a href="./docs/plugins.md">Plugin Development Guide</a></p>
+
+<h1>
+<a id="use" class="anchor" href="#use" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use</h1>
+
+<p>If you've linked or installed Cagophilist globally, you can use <code>cago update</code>.</p>
+
+<h2>
+<a id="adding-a-new-profile" class="anchor" href="#adding-a-new-profile" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Adding a new profile</h2>
+
+<p>Cagophilist can add a new AWS profile</p>
+
+<ol>
+<li><code>cago update</code></li>
+<li>Authenticate</li>
+<li>Choose a role to use for the profile</li>
+<li>Select 'Create a new profile'</li>
+<li>Enter in a name for the new profile</li>
+<li>Done!</li>
+</ol>
+
+<h2>
+<a id="reconfigure-a-new-profile" class="anchor" href="#reconfigure-a-new-profile" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reconfigure a new profile</h2>
+
+<p>Cagophilist can reconfigure an existing AWS profile to use a specific role</p>
+
+<ol>
+<li><code>cago update</code></li>
+<li>Authenticate</li>
+<li>Choose a role to use for the profile</li>
+<li>Choose an existing AWS profile to use for the role</li>
+<li>Done!</li>
+</ol>
+
+<h2>
+<a id="refresh-the-tokens-in-all-of-your-profiles" class="anchor" href="#refresh-the-tokens-in-all-of-your-profiles" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Refresh the tokens in all of your profiles</h2>
+
+<p>Cagophilist can be used to refresh all of the tokens for all of your AWS profiles</p>
+
+<ol>
+<li><code>cago refresh</code></li>
+<li>Authenticate</li>
+<li>For any profiles not already mapped to a role - Choose the role</li>
+<li>Done!</li>
+</ol>
+
+<h2>
+<a id="using-a-profile" class="anchor" href="#using-a-profile" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using a profile</h2>
+
+<p>Cagophilist can configure your shell environment variables for a specific AWS profile. Note: This functionality is somewhat dependant on Bash. Keep that in mind if you're using another shell.</p>
+
+<ol>
+<li><code>source $(cago env update) &lt;profile-name&gt;</code></li>
+<li>Done!</li>
+</ol>
+
+<h2>
+<a id="issues" class="anchor" href="#issues" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Issues</h2>
+
+<p>Feel free to submit issues and enhancement requests.</p>
+
+<p><strong><em>NOTE:</em></strong> Add your system info to the issue from the output of the environment versions command: <code>cago env versions</code></p>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>Please follow the "fork-and-pull" Git workflow.</p>
+
+<ol>
+<li>
+<strong>Fork</strong> the repo on GitHub</li>
+<li>
+<strong>Clone</strong> the project to your own machine</li>
+<li>
+<strong>Commit</strong> changes to your own branch</li>
+<li>Ensure <strong>Tests</strong> are written to cover your changes</li>
+<li>
+<strong>Push</strong> your work back up to your fork</li>
+<li>Submit a <strong>Pull request</strong> so that we can review your changes</li>
+</ol>
+
+<p><strong><em>NOTE:</em></strong> Be sure to merge the latest from "upstream" before making a pull request!</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>Copyright (c) 2016, General Electric Company. All rights reserved.</p>
+
+<p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
+
+<ol>
+<li><p>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</p></li>
+<li><p>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</p></li>
+<li><p>Neither the name of General Electric Company or its subsidiaries nor the names of their contributors, or any trademarks of General Electric Company or its subsidiaries may be used to endorse or promote products derived from this software without specific prior written permission.</p></li>
+</ol>
+
+<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/license2e/cagophilist/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/license2e/cagophilist/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/license2e/cagophilist"></a> is maintained by <a href="https://github.com/license2e">license2e</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
