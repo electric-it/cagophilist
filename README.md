@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/electric-it/cagophilist.svg?branch=master)](https://travis-ci.org/electric-it/cagophilist)
+[![Coverage Status](https://coveralls.io/repos/github/electric-it/cagophilist/badge.svg?branch=master)](https://coveralls.io/github/electric-it/cagophilist?branch=master)
+
 # Cagophilist
 
 --------------------------------------------------------------------------------
