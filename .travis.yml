@@ -14,3 +14,11 @@ script:
 - npm run coverage
 after_success:
 - npm run coveralls
+deploy:
+  provider: npm
+  email: bernie.durfee@ge.com
+  api_key:
+    secure: VTK9rvevH0oO5099m7WrFIjQ3XNIGkOHNvS+1U5iOYQenrm94XJyyQJrlvJDmHsFDIPAA0yEd0jbH6sc4MhZ110+p+YPffTBeqUrVrOZRMyysFWGElAQ0VKiF6u01+wi7h4JGxTu2LLLOdvVWhM/x5zureKUSaug+BCl49Fme/m5rk20VWcctVKNXiKpHetu73JdyCxe8jlROq8fuCd9x4mLtP16Q+hEDk2GSIEujG0Sjxh1ZKW6mZYvqrMnxb7Nj4t72AVvJRlmZ5FbZPABhiAkTVfxVsOXrBOVGw3qB8u4H7THqTyf3SE4MWowcho2zO+7BcvX5vl06MtpIie/DPXn/Z+2aPqedqLqyic5huACPrNAAR7ZDpOTs0N0SSFxrlw/dcSQVnH6PsBAnc6fTERZOL2Ez0NvvprsUbCng5KsskJtzmYjWhI3ZnoAhgyalebyjAbfgFPZppywaxb3EV7oRtFGtlOiqq6z/DiUkBzaSDck3gCEjg3GunSzXdBcDwb1vcGlhs42m2zFts8XQk1Lv1xtPU3tNoSqGY2nHXOXGj7Ek8xzOsuljNeIh+4e/KlmtHbvvbEYvD78RNhb1R32nn2TkoUiBgW5vIQjlqS1+WFs5suLvNYtbmruLaC2vZAw6ypsWjVB2Yok1507+qyK+cK7MY7eO6xLJhI22Gs=
+  on:
+    tags: true
+    repo: electric-it/cagophilist
