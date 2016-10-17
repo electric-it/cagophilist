@@ -23,20 +23,14 @@ _2) A toolbelt for easily managing AWS keys for those that need to switch betwee
 # Install
 
 1. Install node v4.3.2 or above
-2. Clone this repo and `cd /path/to/cagophilist`
-3. `npm i`
-4. Install or link globally:
-
-  - Install globally: `npm install -g ./`
-  - Link globally: `npm link`
-
-5. Add the cagophilist options file: `~/.cagorc` [see the different settings below]
+2. `npm i -g cagophilist`
+3. Add the cagophilist options file: `~/.cagorc` [see the different settings below]
 
   - For Windows users, add the `.cagorc` file to `C:\Users\<your user>\.cagorc`
 
 # Configure
 
-To disable auto copying of the cagophilist source command to the clipboard, add `"autocopy": false` to the .cagorc config.
+To disable auto copying of the cagophilist source command to the clipboard, add `"autocopy": false` to the `.cagorc` config.
 
 **Using settings for roles**
 
