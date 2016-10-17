@@ -2,6 +2,10 @@
 
 ---
 
+## Summary
+
+Cagophilist supports plugin architecture for retrieving roles to display to the user, which is useful for example, in corporate environments where roles are controlled through IDP. Below is a brief example of how to setup a plugin.
+
 ## Example
 
 ```javascript
