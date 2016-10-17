@@ -73,7 +73,7 @@ describe('AssumeRole Tests', () => {
         AWS.restore('STS');
         should(actualTxt.join('')).be.eql([
           chalk.blue('Assuming AWS account and role..\n'),
-          chalk.yellow(`Proxy missing protocol - assuming \'http://\' please update your proxy settings\n\thttp://${proxyText}`),
+          chalk.yellow(`Proxy missing protocol - assuming 'http://' please update your proxy settings\n\thttp://${proxyText}`),
           chalk.green('Successfully assumed role..\n'),
         ].join(''));
         should(token).be.eql('test-token');
