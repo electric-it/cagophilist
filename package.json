@@ -1,6 +1,6 @@
 {
   "name": "cagophilist",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "A toolbelt for easily managing AWS keys for those that need to switch between roles while using the SDK or CLI.",
   "main": "index.js",
   "preferGlobal": true,
