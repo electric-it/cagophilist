@@ -716,7 +716,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
       CAGO_RC_VERSION,
     })));
     td.replace(pathUtils, 'verifyPaths', () => new Promise((resolve) => resolve()));
-    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve()));
+    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve({ registeredHooks: [] })));
     td.replace(listCmd, 'run', () => new Promise((resolve) => resolve()));
     const index = require('../lib/index');
 
@@ -735,7 +735,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
       CAGO_RC_VERSION,
     })));
     td.replace(pathUtils, 'verifyPaths', () => new Promise((resolve) => resolve()));
-    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve()));
+    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve({ registeredHooks: [] })));
     td.replace(listCmd, 'run', () => new Promise((resolve, reject) => reject('An error occurred.')));
     const index = require('../lib/index');
 
