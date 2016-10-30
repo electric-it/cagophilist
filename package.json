@@ -5,8 +5,8 @@
   "main": "index.js",
   "preferGlobal": true,
   "bin": {
-    "cagophilist": "index.js",
-    "cago": "index.js"
+    "cagophilist": "bin/cago.js",
+    "cago": "bin/cago.js"
   },
   "engines": {
     "node": ">=4.3.2"
@@ -16,7 +16,7 @@
     "test": "npm run lint && npm run test-all",
     "coverage": "istanbul cover _mocha test/all",
     "coveralls": "istanbul cover _mocha test/all && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "lint": "./node_modules/.bin/eslint index.js lib/ scripts/ test/",
+    "lint": "./node_modules/.bin/eslint index.js lib/ scripts/ test/ bin/",
     "test-all": "mocha test/all"
   },
   "author": "GE Power",
