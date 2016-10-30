@@ -12,6 +12,7 @@ describe('Index Tests', () => {
   const updateCmd = require('../lib/update');
   const refreshCmd = require('../lib/refresh');
   const excludeCmd = require('../lib/exclude');
+  const listCmd = require('../lib/list');
   const setupCmd = require('../lib/setup');
   const logger = require('../lib/utils/logger');
   const pluginUtils = require('../lib/utils/plugin');
@@ -45,6 +46,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
 
 \t   ${chalk.green('env      ')}\t Gets the environment info through subcommands: ${chalk.yellow('[ update, help, versions, proxy ]')}
 \t   ${chalk.green('exclude  ')}\t Exclude profiles from automatically refreshing when using "refresh" or "update" command
+\t   ${chalk.green('list     ')}\t List the available profiles to refresh, update or assume
 \t   ${chalk.green('refresh  ')}\t Refreshes all the expired profiles (using "refreshMinutes" setting for the threshold)
 \t   ${chalk.green('setup    ')}\t Sets up the necessary files and adds the configured plugins
 \t   ${chalk.green('update   ')}\t Updates the selected profile with the aws token
@@ -700,6 +702,44 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
     const index = require('../lib/index');
 
     index('exclude')
+      .then(() => {
+        done('Rejection failed.');
+      })
+      .catch(() => {
+        done();
+      });
+  });
+
+  it('should resolve promise for list command when successful', (done) => {
+    td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
+      rc_version: CAGO_RC_VERSION,
+      CAGO_RC_VERSION,
+    })));
+    td.replace(pathUtils, 'verifyPaths', () => new Promise((resolve) => resolve()));
+    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve({ registeredHooks: [] })));
+    td.replace(listCmd, 'run', () => new Promise((resolve) => resolve()));
+    const index = require('../lib/index');
+
+    index('list')
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('should reject promise for list command when error', (done) => {
+    td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
+      rc_version: CAGO_RC_VERSION,
+      CAGO_RC_VERSION,
+    })));
+    td.replace(pathUtils, 'verifyPaths', () => new Promise((resolve) => resolve()));
+    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve({ registeredHooks: [] })));
+    td.replace(listCmd, 'run', () => new Promise((resolve, reject) => reject('An error occurred.')));
+    const index = require('../lib/index');
+
+    index('list')
       .then(() => {
         done('Rejection failed.');
       })
