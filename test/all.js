@@ -25,4 +25,5 @@ describe('All Tests', () => {
   require('./test-exclude');
   require('./test-refresh');
   require('./test-setup');
+  require('./test-list');
 });
