@@ -83,7 +83,9 @@ describe('Plugin Utils Tests', () => {
     const pluginUtils = require('../lib/utils/plugin');
 
     (() => {
-      pluginUtils.getPluginPath({ locked: {} });
+      pluginUtils.getPluginPath({
+        locked: {},
+      });
     }).should.throw('Path must be a string. Received undefined');
     done();
   });
@@ -91,7 +93,11 @@ describe('Plugin Utils Tests', () => {
   it('should return correct path into getPluginPath', (done) => {
     const pluginUtils = require('../lib/utils/plugin');
 
-    const pluginPath = pluginUtils.getPluginPath({ locked: { cagoPath: TEMP_CAGO_PATH } }, 'some-plugin');
+    const pluginPath = pluginUtils.getPluginPath({
+      locked: {
+        cagoPath: TEMP_CAGO_PATH,
+      },
+    }, 'some-plugin');
     should(pluginPath).be.eql('/tmp/.cago/node_modules/some-plugin');
     done();
   });
@@ -125,9 +131,15 @@ describe('Plugin Utils Tests', () => {
   it('should return successfully loaded all plugins with no plugins configured in checkPlugins', (done) => {
     const pluginUtils = require('../lib/utils/plugin');
 
-    pluginUtils.checkPlugins({ plugins: {} })
+    pluginUtils.checkPlugins({
+      plugins: {},
+    })
       .then((ret) => {
-        should(ret).be.eql({ checked: true, allLoaded: true });
+        should(ret).be.eql({
+          checked: true,
+          allLoaded: true,
+          registeredHooks: [],
+        });
         done();
       })
       .catch((err) => {
@@ -172,7 +184,12 @@ describe('Plugin Utils Tests', () => {
 
     pluginUtils.checkPlugins(cagoOptions, opts)
       .then((ret) => {
-        should(ret).be.eql({ checked: true, allLoaded: false, missing: ['test-plugin'] });
+        should(ret).be.eql({
+          checked: true,
+          allLoaded: false,
+          missing: ['test-plugin'],
+          registeredHooks: [],
+        });
         done();
       })
       .catch((err) => {
@@ -199,7 +216,11 @@ describe('Plugin Utils Tests', () => {
     pluginUtils.checkPlugins(cagoOptions, opts)
       .then((ret) => {
         should(pluginUtils.pluginsForHooks).be.eql({});
-        should(ret).be.eql({ checked: true, allLoaded: true });
+        should(ret).be.eql({
+          checked: true,
+          allLoaded: true,
+          registeredHooks: [],
+        });
         done();
       })
       .catch((err) => {
@@ -227,8 +248,14 @@ describe('Plugin Utils Tests', () => {
 
     pluginUtils.checkPlugins(cagoOptions, opts)
       .then((ret) => {
-        should(pluginUtils.pluginsForHooks).be.eql({ 'test-hook': ['test-plugin'] });
-        should(ret).be.eql({ checked: true, allLoaded: true });
+        should(pluginUtils.pluginsForHooks).be.eql({
+          'test-hook': ['test-plugin'],
+        });
+        should(ret).be.eql({
+          checked: true,
+          allLoaded: true,
+          registeredHooks: ['test-hook'],
+        });
         done();
       })
       .catch((err) => {
@@ -300,7 +327,9 @@ describe('Plugin Utils Tests', () => {
 
     pluginUtils.installPlugins(cagoOptions)
       .then((ret) => {
-        should(ret).be.eql({ success: true });
+        should(ret).be.eql({
+          success: true,
+        });
         done();
       })
       .catch((err) => {
@@ -324,7 +353,9 @@ describe('Plugin Utils Tests', () => {
 
     pluginUtils.installPlugins(cagoOptions)
       .then((ret) => {
-        should(ret).be.eql({ success: true });
+        should(ret).be.eql({
+          success: true,
+        });
         done();
       })
       .catch((err) => {
@@ -361,7 +392,9 @@ describe('Plugin Utils Tests', () => {
   it('should throw error with incorrect arguments into setupPluginPaths', (done) => {
     const pluginUtils = require('../lib/utils/plugin');
 
-    pluginUtils.setupPluginPaths({ locked: {} })
+    pluginUtils.setupPluginPaths({
+      locked: {},
+    })
       .then(() => {
         done('Rejection failed.');
       })
@@ -496,14 +529,18 @@ describe('Plugin Utils Tests', () => {
     td.replace(pluginPath, {
       name: 'test-plugin',
       hook: 'test-hook',
-      run: () => new Promise((resolve) => resolve({ roles: true })),
+      run: () => new Promise((resolve) => resolve({
+        roles: true,
+      })),
     });
     const pluginUtils = require('../lib/utils/plugin');
 
     pluginUtils.checkPlugins(cagoOptions, opts)
       .then(() => pluginUtils.runPlugins(cagoOptions, 'test-hook'))
       .then((ret) => {
-        should(ret).be.eql({ roles: true });
+        should(ret).be.eql({
+          roles: true,
+        });
         done();
       })
       .catch((err) => {

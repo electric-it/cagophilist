@@ -90,6 +90,7 @@ describe('GetOptions Tests', () => {
             cagoPath: '/tmp/.cago',
           },
           roles: null,
+          registeredHooks: [],
           CAGO_RC_VERSION,
         }));
         done();

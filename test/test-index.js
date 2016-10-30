@@ -108,6 +108,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       locked: {
         cagoConfigPath: TEMP_CAGO_CONFIG,
+        registeredHooks: [],
       },
       CAGO_RC_VERSION,
     })));
@@ -126,6 +127,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should reject promise for setup command when error', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     td.replace(setupCmd, 'run', () => new Promise((resolve, reject) => reject('An error occurred.')));
@@ -144,6 +146,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should resolve promise for setup command when successful', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     td.replace(setupCmd, 'run', () => new Promise((resolve) => resolve()));
@@ -162,6 +165,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should display help menu with no arguments', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     const index = require('../lib/index');
@@ -179,6 +183,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should display help menu with "-h"', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     const index = require('../lib/index');
@@ -196,6 +201,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should display help menu with "--help"', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     const index = require('../lib/index');
@@ -213,6 +219,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should display help menu with "help"', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     const index = require('../lib/index');
@@ -230,6 +237,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should display help menu with "-?"', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     const index = require('../lib/index');
@@ -247,6 +255,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should display help menu with error message when command is "wrong"', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     const index = require('../lib/index');
@@ -265,6 +274,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should display version with "-v"', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     const index = require('../lib/index');
@@ -282,6 +292,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should display version with "-version"', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     const index = require('../lib/index');
@@ -299,6 +310,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should display version with "--version"', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     const index = require('../lib/index');
@@ -316,6 +328,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should display version with "version"', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     const index = require('../lib/index');
@@ -333,6 +346,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should fail with error from os-cli with arguments "env" "versions"', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     td.replace('os-cli', (callback) => callback('An error occurred with os-cli'));
@@ -351,6 +365,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should display versions of different components with arguments "env" "versions"', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     td.replace('os-cli', (callback) => callback(null, {
@@ -361,7 +376,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
     }));
     const index = require('../lib/index');
 
-    const cagoOptions = { rc_version: CAGO_RC_VERSION };
+    const cagoOptions = { rc_version: CAGO_RC_VERSION, registeredHooks: [] };
     const info = {
       name: 'Cago',
       version: '1.0.0',
@@ -407,6 +422,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
     });
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     const index = require('../lib/index');
@@ -440,6 +456,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should display no proxy settings with arguments "env" "proxy"', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     const index = require('../lib/index');
@@ -470,6 +487,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should return the path to update-aws-token.sh with "env" "update"', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     const index = require('../lib/index');
@@ -489,6 +507,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should return the path to update-aws-token.sh with "env" "help"', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     const index = require('../lib/index');
@@ -506,6 +525,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should return the path to update-aws-token.sh with "env" ""', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     const index = require('../lib/index');
@@ -523,16 +543,42 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should return error with a message to run setup first', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
+    td.replace(pathUtils, 'verifyPaths', (opts) => new Promise((resolve, reject) => reject('An error occurred.')));
     td.replace(updateCmd, 'run', () => new Promise((resolve) => resolve()));
     const index = require('../lib/index');
 
     index('update')
       .then(() => {
         should(actualTxt.join('')).be.eql([
-          chalk.red(`\nTypeError: Cannot convert undefined or null to object`),
+          chalk.red('\nAn error occurred.'),
           chalk.red(`\nPlease run setup command first: ${chalk.magenta('cago setup')}\n`),
+        ].join(''));
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('should return error when "version-checks" plugin returns an error', (done) => {
+    td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
+      rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
+      CAGO_RC_VERSION,
+    })));
+    td.replace(pathUtils, 'verifyPaths', () => new Promise((resolve) => resolve()));
+    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve({ registeredHooks: ['version-checks'] })));
+    td.replace(pluginUtils, 'runPlugins', () => new Promise((resolve, reject) => reject('An error occurred.')));
+    td.replace(updateCmd, 'run', () => new Promise((resolve) => resolve()));
+    const index = require('../lib/index');
+
+    index('update')
+      .then(() => {
+        should(actualTxt.join('')).be.eql([
+          chalk.red('\nAn error occurred.'),
         ].join(''));
         done();
       })
@@ -544,10 +590,12 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should resolve promise for update command when successful', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     td.replace(pathUtils, 'verifyPaths', () => new Promise((resolve) => resolve()));
-    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve()));
+    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve({ registeredHooks: ['version-checks'] })));
+    td.replace(pluginUtils, 'runPlugins', () => new Promise((resolve) => resolve()));
     td.replace(updateCmd, 'run', () => new Promise((resolve) => resolve()));
     const index = require('../lib/index');
 
@@ -563,10 +611,11 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should reject promise for update command when error', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     td.replace(pathUtils, 'verifyPaths', () => new Promise((resolve) => resolve()));
-    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve()));
+    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve({ registeredHooks: [] })));
     td.replace(updateCmd, 'run', () => new Promise((resolve, reject) => reject('An error occurred.')));
     const index = require('../lib/index');
 
@@ -582,10 +631,11 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should resolve promise for refresh command when successful', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     td.replace(pathUtils, 'verifyPaths', () => new Promise((resolve) => resolve()));
-    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve()));
+    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve({ registeredHooks: [] })));
     td.replace(refreshCmd, 'run', () => new Promise((resolve) => resolve()));
     const index = require('../lib/index');
 
@@ -601,10 +651,11 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should reject promise for refresh command when error', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     td.replace(pathUtils, 'verifyPaths', () => new Promise((resolve) => resolve()));
-    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve()));
+    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve({ registeredHooks: [] })));
     td.replace(refreshCmd, 'run', () => new Promise((resolve, reject) => reject('An error occurred.')));
     const index = require('../lib/index');
 
@@ -620,10 +671,11 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should resolve promise for exclude command when successful', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     td.replace(pathUtils, 'verifyPaths', () => new Promise((resolve) => resolve()));
-    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve()));
+    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve({ registeredHooks: [] })));
     td.replace(excludeCmd, 'run', () => new Promise((resolve) => resolve()));
     const index = require('../lib/index');
 
@@ -639,10 +691,11 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
   it('should reject promise for exclude command when error', (done) => {
     td.replace('../lib/getOptions', () => new Promise((resolve) => resolve({
       rc_version: CAGO_RC_VERSION,
+      registeredHooks: [],
       CAGO_RC_VERSION,
     })));
     td.replace(pathUtils, 'verifyPaths', () => new Promise((resolve) => resolve()));
-    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve()));
+    td.replace(pluginUtils, 'checkPlugins', () => new Promise((resolve) => resolve({ registeredHooks: [] })));
     td.replace(excludeCmd, 'run', () => new Promise((resolve, reject) => reject('An error occurred.')));
     const index = require('../lib/index');
 
