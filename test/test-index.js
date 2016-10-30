@@ -546,7 +546,7 @@ ${chalk.red(`Note: the settings file can be found here: ${chalk.magenta(TEMP_CAG
       registeredHooks: [],
       CAGO_RC_VERSION,
     })));
-    td.replace(pathUtils, 'verifyPaths', (opts) => new Promise((resolve, reject) => reject('An error occurred.')));
+    td.replace(pathUtils, 'verifyPaths', () => new Promise((resolve, reject) => reject('An error occurred.')));
     td.replace(updateCmd, 'run', () => new Promise((resolve) => resolve()));
     const index = require('../lib/index');
 
