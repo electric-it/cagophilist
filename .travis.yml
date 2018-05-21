@@ -1,8 +1,7 @@
 language: go
 
 go:
-  - "1.8"
-  - "1.10.x"
+  - "1.9.x"
 
 script:
   - make package

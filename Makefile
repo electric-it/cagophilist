@@ -68,7 +68,7 @@ gox: clean banner
 
 .PHONY: package
 package: SHELL:=/bin/bash
-package: gox
+package: lint gox
 	@printf "\n==> Creating packages\n"
 	@set -exv
 	@for os in $(CCOS);                                          				      \
