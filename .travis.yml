@@ -1,24 +1,5 @@
-language: node_js
-node_js:
-- v4.3.2
-- v4.6.1
-- v6.9.1
-- v7.0.0
-sudo: false
-before_install:
-- npm install -g npm
-install:
-- npm install
-script:
-- npm run test
-- npm run coverage
-after_success:
-- npm run coveralls
-deploy:
-  provider: npm
-  email: bernie.durfee@ge.com
-  api_key:
-    secure: "cxdAiAijpeGaHB04J0PZ30rtS0kR8458xdgihIeZcY0NnZOW2RJb+CzOQ8cwsbGtqQ1JIHna9LHxsUnoYV13kYrwTgfYNOQIyVc9X5OoHi5oSC/vp785OefskiZTS2YE9t+1AUON1m8SVpqkWTZZl9+OUHb5Mu50NLVsCJrM1ZQyNlRjDR/FxGoSFQruqWm/fzBdiDsCZjNSCdJKJvcLQHEgG+0S6od7OHg85tCQ0Mrfx6oA2QjUc3paCm1KNUgpiq8pvzkBkxE3x3dICpHokyNy9bpS0pF7yoMsUATiYw8bnDPdPwQEBwepjVDNbPkhLzF9KOZoGdHsWl6Fa3rEiJKnJt16qMxr2qB//Qv1ulHOWCXRFqPpqetz5R0ca2AsA7kI5gRDk4sxCh2SqQPYPPDLH2W8SCHfYjlzWavxwwRM/9x9JIJEE44LuLObWYZzGuBTqlLZyD11IGgfhBy6zNyTcXqAN/qnM1UhOCtOGFDqXCVp9WWRdVof0NQJD/q9rOIvcOSgKPQsDSkeYf1wVerljgksXnyQRSo0d3iNnsUaPIJ2EuQYl6iI1FfvFVVe7mBjTZTBBaIshV+T3YydLKfrapwumCAZf0KIUzaY2Mn3Gof7yliDGKNFZw7VFH54LniuK6zY2h2AfExISqG4nRN9UEiNoJy5D3f9ifUjQj0="
-  on:
-    tags: true
-    repo: electric-it/cagophilist
+language: go
+
+go:
+  - "1.8"
+  - "1.10.x"
