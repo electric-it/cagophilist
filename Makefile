@@ -5,10 +5,6 @@ export GO15VENDOREXPERIMENT=1
 NAME=cago
 DESCRIPTION="Cagophilist - Manager of AWS profiles"
 
-CCOS=windows darwin linux
-CCARCH=amd64
-CCOUTPUT="pkg/{{.OS}}-{{.Arch}}/$(NAME)"
-
 GO_VERSION=$(shell go version)
 
 # Get the git commit
@@ -18,6 +14,12 @@ BUILD_COUNT=$(shell git rev-list --count HEAD)
 BUILD_TAG="${BUILD_COUNT}.${SHA}"
 
 UNAME := $(shell uname -s)
+
+BUILD_DIR=build
+
+CCOS=windows darwin linux
+CCARCH=amd64
+GOX_OUTPUT="$(BUILD_DIR)/{{.OS}}-{{.Arch}}/$(NAME)"
 
 .PHONY: default
 default: banner lint
@@ -30,8 +32,8 @@ banner:
 	@echo "Binary name:    $(NAME)"
 	@echo "Binary version: $(VERSION)"
 
-.PHONY: vendor
-vendor:
+.PHONY: update-vendor
+update-vendor:
 	curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 	@printf "\n==> Installed dep\n"
 	dep version
@@ -45,7 +47,7 @@ docs:
 	doctoc README.md --maxlevel 1
 
 .PHONY: lint
-lint: clean vendor
+lint: clean
 	@printf "\n==> Installing Go meta-linter\n"
 	go get -u gopkg.in/alecthomas/gometalinter.v2
 	@printf "\n==> Installing linters\n"
@@ -54,7 +56,7 @@ lint: clean vendor
 	gometalinter.v2 --vendor ./...
 
 .PHONY: gox
-gox: vendor
+gox: clean
 	@printf "\n==> Using Gox to cross-compile $(NAME)\n"
 	go get github.com/mitchellh/gox
 	@mkdir -p $(BUILD_DIR)
@@ -62,38 +64,33 @@ gox: vendor
 	@gox -ldflags="-X github.com/electric-it/cagophilist/cmd.Version=${VERSION}" \
 	     -os="$(CCOS)" \
 			 -arch="$(CCARCH)" \
-			 -output="$(CCOUTPUT)"
+			 -output="$(GOX_OUTPUT)"
 
 .PHONY: package
 package: SHELL:=/bin/bash
 package: gox
-	@printf "\n==> Creating distributable packages\n"
+	@printf "\n==> Creating packages\n"
 	@set -exv
-	@mkdir -p release/
-	@for os in $(CCOS);                                          				\
-	 do                                                                 \
-		  for arch in $(CCARCH);                                          \
-		  do                                                              \
-		    cd "pkg/$$os-$$arch/" || exit;                                \
-		    if [ "$$os" == "windows" ]; then                              \
-					cp ../../scripts/cago_win.bat .;                            \
-		      filename=cago-$$os-$$arch-$(VERSION).zip;                   \
-		      echo Creating: release/$$filename;                          \
-		      zip ../../release/$$filename cago* > /dev/null 2>&1;        \
-		    else                                                          \
-					cp ../../scripts/cago.sh .;                                 \
-		      filename=cago-$$os-$$arch-$(VERSION).tar.gz;                \
-		      echo Creating: release/$$filename;                          \
-		      tar -zcvf ../../release/$$filename cago* > /dev/null 2>&1;  \
-		    fi;                                                           \
-		    cd ../../ || exit;                                            \
-		  done                                                            \
+	@for os in $(CCOS);                                          				      \
+	 do                                                                       \
+		  for arch in $(CCARCH);                                                \
+		  do                                                                    \
+				package_dir=$(BUILD_DIR)/$$os-$$arch/;                              \
+				echo Working on: $$package_dir;                                     \
+		    if [ "$$os" == "windows" ]; then                                    \
+		      filename=cago-$$os-$$arch-$(VERSION).zip;                         \
+		      echo Creating: $(BUILD_DIR)/$$filename;                           \
+		      zip $(BUILD_DIR)/$$filename $$package_dir/* scripts/cago_win.bat; \
+		    else                                                                \
+		      filename=cago-$$os-$$arch-$(VERSION).tar.gz;                      \
+		      echo Creating: $(BUILD_DIR)/$$filename;                           \
+		      tar -czf $(BUILD_DIR)/$$filename $$package_dir/* scripts/cago.sh; \
+		    fi;                                                                 \
+		  done                                                                  \
 	 done
-	@printf "\n==> Done Cross Compiling $(NAME)\n"
+	@printf "\n==> Done packaging\n"
 
 .PHONY: clean
 clean:
 	@printf "\n==> Cleaning\n"
-	rm -rf release/
-	rm -rf bin/
-	rm -rf pkg/
+	rm -rf $(BUILD_DIR)
