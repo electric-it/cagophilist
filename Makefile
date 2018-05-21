@@ -56,7 +56,7 @@ lint: clean
 	gometalinter.v2 --vendor ./...
 
 .PHONY: gox
-gox: clean
+gox: clean banner
 	@printf "\n==> Using Gox to cross-compile $(NAME)\n"
 	go get github.com/mitchellh/gox
 	@mkdir -p $(BUILD_DIR)
