@@ -50,7 +50,7 @@ func GetSAMLAssertion() (string, error) {
 
 	log.Debugf("Status from the IdP: %v", res.Status)
 
-	doc, err := goquery.NewDocumentFromResponse(res)
+	doc, err := goquery.NewDocumentFromReader(res.Body)
 	if err != nil {
 		log.Fatalf("Error creating new document from response: %s", err)
 		os.Exit(1)
