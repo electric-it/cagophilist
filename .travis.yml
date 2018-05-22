@@ -1,7 +1,18 @@
 language: go
 
 go:
-  - "1.9.x"
+- 1.9.x
 
 script:
-  - make package
+- make package
+
+deploy:
+  provider: releases
+  api_key:
+    secure: msqei7L/ZyBrOpLoRDmptsYbyCxncsOnkPp+9SfpscZFTHNQ0Jlw88ndOskIBSfWkndx5ra7LDDflUVraHdp9eTRxxDdsWUUrB7OVtAwVApeVToHSY24lsCqrk1b9NNIvea2geMDPqLQ7+pJEneA9BplBRVQ157I0FQlmL5lcXh1lwrsM11w18Xv2aeWsoFpqePyFvNkIuaAqaEhQFK7EhzDl8DNVaMXmBgVrXl5720t8LGP7gLMtZnGboIOm6OFrxopokVw1EjSfyOI9x1f4ixaLitg1JWzLL1PEV8v0Rr0qRW+G6GUeIFnFV1ydGNkxIIXLC2qtWF63/Iz0mhywi8acs65DxODPtVtyGEP/O17BVkOjtoDHckBcnKgKJtDc7NBf8M09UyltqjnV+On8Ef1PNKIlz/2GofMWjTIuKq6hta2htsb65u4BlDNMZYrGgiWxsk5zQD3gcXJQ0Vrn+oCVxmv6iraIDGFhUGsXv3EnJAON4/u0fAc/y303bnZ+gJ434skkWKLUVfZNsap7BNkAciM1dzoGs2zl+eomoO1PP3tUap/d5jXv4dykkk059A8FMtbOpy8C9VGBXhLESrt2v51CmEzBbNzxyThyZNuYIcaKGxOJ7qWDtNLtsu5eheDM9p0C6qcwIsMr68ww6YXCdgzfTwbVm4mc/rIk10=
+  file_glob: true
+  file:
+    - build/*.tar.gz
+    - build/*.zip
+  on:
+    tags: true
