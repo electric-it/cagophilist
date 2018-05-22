@@ -78,13 +78,15 @@ package: lint gox
 				package_dir=$(BUILD_DIR)/$$os-$$arch/;                              \
 				echo Working on: $$package_dir;                                     \
 		    if [ "$$os" == "windows" ]; then                                    \
-		      filename=cago-$$os-$$arch-$(VERSION).zip;                         \
-		      echo Creating: $(BUILD_DIR)/$$filename;                           \
-		      zip $(BUILD_DIR)/$$filename $$package_dir/* scripts/cago_win.bat; \
+				  cp scripts/cago_win.bat $$package_dir;                            \
+		      package_archive=cago-$$os-$$arch-$(VERSION).zip;                  \
+		      echo Creating: $(BUILD_DIR)/$$package_archive;                    \
+		      zip -j $(BUILD_DIR)/$$package_archive $$package_dir/*;               \
 		    else                                                                \
-		      filename=cago-$$os-$$arch-$(VERSION).tar.gz;                      \
-		      echo Creating: $(BUILD_DIR)/$$filename;                           \
-		      tar -czf $(BUILD_DIR)/$$filename $$package_dir/* scripts/cago.sh; \
+				  cp scripts/cago.sh $$package_dir;                                 \
+		      package_archive=cago-$$os-$$arch-$(VERSION).tar.gz;               \
+		      echo Creating: $(BUILD_DIR)/$$package_archive;                    \
+		      tar -czf $(BUILD_DIR)/$$package_archive -C $$package_dir .;       \
 		    fi;                                                                 \
 		  done                                                                  \
 	 done

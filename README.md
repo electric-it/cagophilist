@@ -1,3 +1,4 @@
+![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)
 [![Build Status](https://travis-ci.org/electric-it/cagophilist.svg?branch=master)](https://travis-ci.org/electric-it/cagophilist)
 [![Go Report Card](https://goreportcard.com/badge/github.com/electric-it/cagophilist)](https://goreportcard.com/report/github.com/electric-it/cagophilist)
 # Cagophilist (aka Cago)
