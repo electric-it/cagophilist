@@ -53,7 +53,7 @@ lint: clean
 	@printf "\n==> Installing linters\n"
 	gometalinter.v2 --install
 	@printf "\n==> Running linters\n"
-	gometalinter.v2 --vendor ./...
+	gometalinter.v2 --deadline 5m --vendor ./...
 
 .PHONY: gox
 gox: clean banner
