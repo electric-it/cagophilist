@@ -1,5 +1,5 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/electric-it/cagophilist)](https://goreportcard.com/report/github.com/electric-it/cagophilist)
 [![Build Status](https://travis-ci.org/electric-it/cagophilist.svg?branch=master)](https://travis-ci.org/electric-it/cagophilist)
+[![Go Report Card](https://goreportcard.com/badge/github.com/electric-it/cagophilist)](https://goreportcard.com/report/github.com/electric-it/cagophilist)
 # Cagophilist (aka Cago)
 Cago (_pronounced kay-go_) is a very simple tool for managing role-based access to AWS on the command line.
 
