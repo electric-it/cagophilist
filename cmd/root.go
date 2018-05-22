@@ -17,6 +17,8 @@ const (
 	localConfigFile  = ".cago/cago.yaml"
 	cachedConfigFile = ".cago/cached.cago.yaml"
 
+	remoteConfigFileEnvVariable = "CAGO_CONFIG_URL"
+
 	configFileFlagLong  = "config-file"
 	configFileFlagShort = "c"
 )
@@ -78,6 +80,7 @@ func init() {
 func initConfig() {
 	if viper.GetBool("debug") {
 		log.SetLevel(log.DebugLevel)
+		log.Debugf("Debug logging enabled!")
 	} else {
 		log.SetLevel(log.InfoLevel)
 	}
@@ -88,32 +91,43 @@ func initConfig() {
 	viper.SetEnvPrefix("CAGO")
 	viper.AutomaticEnv()
 
-	// First, check to see if the user passed in a specific config file to use
-	var configurationFilePath string
-	if viper.IsSet(configFileFlagLong) {
-		configurationFilePath = viper.GetString(configFileFlagLong)
+	// Check for the configuration file in the following order:
+	//  1. Local configuration file specified using a command line argument
+	//  2. Remote configuration file specified using the CAGO_CONFIG_URL environment variable
+	//  3. Local configuration file cached from a previous download
+	//  4. Local configuration file manually created by user
 
-		log.Debugf("Using local configuration file: %s", configurationFilePath)
+	// Step 1: Check to see if the configuration file path is set via command line argument
+	configurationFilePath := viper.GetString(configFileFlagLong)
+	if configurationFilePath != "" {
+		log.Debugf("Configuration file command line argument '%s' is set to: %s", configFileFlagLong, configurationFilePath)
 	} else {
-		log.Debugf("Config file flag not set, checking CAGO_CONFIG_URL")
+		log.Debugf("Configuration file command line argument '%s' is not set", configFileFlagLong)
+	}
 
-		url, ok := os.LookupEnv("CAGO_CONFIG_URL")
+	// Step 2 and 3: Download a remote file or used a previously cached version
+	if configurationFilePath == "" {
+		remoteConfigurationFileURL, ok := os.LookupEnv("CAGO_CONFIG_URL")
 		if ok {
-			configurationFilePath = getRemoteConfigurationFile(url)
+			log.Debugf("Environment variable '%s' is set to: %s", remoteConfigFileEnvVariable, remoteConfigurationFileURL)
+			configurationFilePath = getRemoteConfigurationFile(remoteConfigurationFileURL)
 		} else {
-			log.Debugf("CAGO_CONFIG_URL not set, checking for local configuration file")
-
-			// If the  didn't load, try finding the remote configuration file
-			configurationFilePath = getLocalConfigurationFile()
+			log.Debugf("Environment variable '%s' is not set", remoteConfigFileEnvVariable)
 		}
 	}
 
+	// Step 4: Use a manually created local file
 	if configurationFilePath == "" {
-		log.Errorf("Cago could not find a configuration file to use!")
-		log.Errorf("  1. Checked for the configuration file flag, not there or not valid.")
-		log.Errorf("  2. Checked for the CAGO_CONFIG_URL, not there or not valid.")
-		log.Errorf("  3. Checked for the cached remote file, not there or not valid.")
-		log.Errorf("  4. Checked for the local configuration file, not there or not valid.")
+		// If the  didn't load, try finding the remote configuration file
+		configurationFilePath = getLocalConfigurationFile()
+	}
+
+	if configurationFilePath == "" {
+		log.Errorf("Cago could not find a configuration file to use! Here's what Cago checks:")
+		log.Errorf("  1. Configuration file path specified using command line argument: %s", configFileFlagLong)
+		log.Errorf("  2. Remote configuration file URL specified using environment variable: %s", remoteConfigFileEnvVariable)
+		log.Errorf("  3. Previously cached remote configuration file in: %s", cachedConfigFile)
+		log.Errorf("  4. Manually created configuration file here: %s", localConfigFile)
 
 		os.Exit(1)
 	}
