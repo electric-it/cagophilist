@@ -26,11 +26,15 @@ default: banner lint
 
 .PHONY: banner
 banner:
+	@echo "===================================================================="
+	@echo "===================================================================="
 	@echo "Working dir:    $(shell pwd)"
 	@echo "Go version:     ${GO_VERSION}"
 	@echo "Go path:        ${GOPATH}"
 	@echo "Binary name:    $(NAME)"
 	@echo "Binary version: $(VERSION)"
+	@echo "===================================================================="
+	@echo "===================================================================="
 
 .PHONY: update-vendor
 update-vendor:
@@ -54,21 +58,29 @@ lint: clean
 	gometalinter.v2 --install
 	@printf "\n==> Running linters\n"
 	gometalinter.v2 --deadline 5m --vendor ./...
+	@printf "\n==> Done linting\n"
+
+.PHONY: build
+build: banner clean lint
+	@printf "\n==> Building local executable\n"
+	@go build -o cago
+	@printf "\n==> Done building local executable\n"
 
 .PHONY: gox
-gox: clean banner
-	@printf "\n==> Using Gox to cross-compile $(NAME)\n"
+gox: banner clean lint
+	@printf "\n==> Using Gox to cross-compile\n"
 	go get github.com/mitchellh/gox
 	@mkdir -p $(BUILD_DIR)
 	@cd $(BUILD_DIR)
 	@gox -ldflags="-X github.com/electric-it/cagophilist/cmd.Version=${VERSION}" \
-	     -os="$(CCOS)" \
-			 -arch="$(CCARCH)" \
+	     -os="$(CCOS)"                                                          \
+			 -arch="$(CCARCH)"                                                      \
 			 -output="$(GOX_OUTPUT)"
+  @printf "\n==> Done with cross-compile\n"
 
 .PHONY: package
 package: SHELL:=/bin/bash
-package: lint gox
+package: banner clean lint gox
 	@printf "\n==> Creating packages\n"
 	@set -exv
 	@for os in $(CCOS);                                          				      \
@@ -96,3 +108,4 @@ package: lint gox
 clean:
 	@printf "\n==> Cleaning\n"
 	rm -rf $(BUILD_DIR)
+	@printf "\n==> Done cleaning\n"
