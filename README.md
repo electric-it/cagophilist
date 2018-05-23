@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/electric-it/cagophilist.svg?branch=master)](https://travis-ci.org/electric-it/cagophilist)
 [![Go Report Card](https://goreportcard.com/badge/github.com/electric-it/cagophilist)](https://goreportcard.com/report/github.com/electric-it/cagophilist)
 # Cagophilist (aka Cago)
-Cago (_pronounced kay-go_) is a very simple tool for managing role-based access to AWS on the command line.
+Cago (_pronounced kay-go_) is a tool for managing access to the AWS API from the command line. If you use command-line tools to manage AWS resources, you access AWS using temporary keys for federated role and have to frequently switch between different profiles as you work, Cago can help.
 
 # About AWS Profiles
 An AWS profile is simply a named set of credentials for accessing the AWS API. By default, AWS profiles are stored in an ini file: `~/.aws/credentials`. Each section in this ini file represent a different profile. Cago is used to manipulate these profiles and to copy values from profiles into environment variables.
@@ -24,6 +24,7 @@ You need 3 things to get Cago running:
 _Note: Be sure to run `cagor` once you get setup. This will sync your profiles to your authorized roles!_
 
 ## Mac Homebrew install
+`brew tap electric-it/electric-it`
 `brew install cago`
 
 ## Manual install
