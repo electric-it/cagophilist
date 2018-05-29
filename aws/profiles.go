@@ -14,6 +14,11 @@ import (
 	"github.com/apex/log"
 )
 
+const (
+	// Permissions for the credentials file directory
+	credentialsFileDirPermissions os.FileMode = 0755
+)
+
 var credentialsFilePath = home.Dir() + string(os.PathSeparator) + ".aws" + string(os.PathSeparator)
 
 // CredentialsFileLocation The location of the credentials file
@@ -116,7 +121,7 @@ func GetCredentialsFile() (credentialsFile *ini.File, err error) {
 	} else {
 		// If not, create it
 		log.Debugf("Credentials file not found, creating empty file: %s", CredentialsFileLocation)
-		mkdirError := os.MkdirAll(credentialsFilePath, 0600)
+		mkdirError := os.MkdirAll(credentialsFilePath, credentialsFileDirPermissions)
 		if mkdirError != nil {
 			return nil, errors.Wrap(mkdirError, fmt.Sprintf("Unable to create directory: %s", credentialsFilePath))
 		}
