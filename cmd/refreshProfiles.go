@@ -188,7 +188,7 @@ var refreshProfilesCmd = &cobra.Command{
 				}
 
 				// All is well with this profile, so store it
-				log.Infof("Refreshed expired profile: %s", profileName)
+				log.Infof("Fresh token retrieved for: %s", profileName)
 				validProfiles[profileName] = section
 			} else {
 				// The profile is valid and hasn't expired
