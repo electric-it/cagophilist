@@ -16,7 +16,10 @@ import (
 
 const (
 	// Permissions for the credentials file directory
-	credentialsFileDirPermissions os.FileMode = 0755
+	credentialsFileDirMode os.FileMode = 0700
+
+	// Permissions for the credentials file
+	credentialsFileMode os.FileMode = 0600
 )
 
 var credentialsFilePath = home.Dir() + string(os.PathSeparator) + ".aws" + string(os.PathSeparator)
@@ -121,7 +124,7 @@ func GetCredentialsFile() (credentialsFile *ini.File, err error) {
 	} else {
 		// If not, create it
 		log.Debugf("Credentials file not found, creating empty file: %s", CredentialsFileLocation)
-		mkdirError := os.MkdirAll(credentialsFilePath, credentialsFileDirPermissions)
+		mkdirError := os.MkdirAll(credentialsFilePath, credentialsFileDirMode)
 		if mkdirError != nil {
 			return nil, errors.Wrap(mkdirError, fmt.Sprintf("Unable to create directory: %s", credentialsFilePath))
 		}
@@ -130,6 +133,12 @@ func GetCredentialsFile() (credentialsFile *ini.File, err error) {
 		rawCredentialsFile, createError := os.Create(CredentialsFileLocation)
 		if createError != nil {
 			return nil, errors.Wrap(createError, fmt.Sprintf("Unable to create empty credentials file: %s", CredentialsFileLocation))
+		}
+
+		log.Debugf("Updating credentials file mode")
+		chmodError := rawCredentialsFile.Chmod(credentialsFileMode)
+		if chmodError != nil {
+			return nil, errors.Wrap(chmodError, fmt.Sprintf("Unable to chmod credentials file"))
 		}
 
 		log.Debugf("Closing new credentials file: %s", CredentialsFileLocation)
