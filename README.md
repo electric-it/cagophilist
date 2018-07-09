@@ -25,6 +25,7 @@ _Note: Be sure to run `cagor` once you get setup. This will sync your profiles t
 
 ## Mac Homebrew install
 `brew tap electric-it/electric-it`
+
 `brew install cago`
 
 ## Manual install
