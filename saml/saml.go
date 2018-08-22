@@ -16,6 +16,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/apex/log"
 	"github.com/beevik/etree"
+	"github.com/kr/pretty"
 	"github.com/spf13/viper"
 )
 
@@ -58,6 +59,8 @@ func GetSAMLAssertion() (string, error) {
 
 	samlAssertionBase64, ok := doc.Find("input[name='SAMLResponse']").Attr("value")
 	if !ok {
+		log.Debug(pretty.Sprint(doc.Html()))
+
 		log.Fatalf("Unable to locate SAMLResponse!")
 		os.Exit(1)
 	}
