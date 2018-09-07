@@ -54,6 +54,8 @@ docs:
 lint: clean
 	@printf "\n==> Installing Go metalinter\n"
 	go get -u gopkg.in/alecthomas/gometalinter.v2
+	@printf "\n==> Installing linters\n"
+	gometalinter.v2 --install
 	@printf "\n==> Running linters\n"
 	gometalinter.v2 --deadline 5m --vendor ./...
 	@printf "\n==> Done linting\n"
