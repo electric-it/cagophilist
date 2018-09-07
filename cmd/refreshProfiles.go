@@ -58,12 +58,16 @@ var refreshProfilesCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
+		log.Debug("Retrieved SAML assertion from IdP")
+
 		// Grab the list of authorized roles from the IdP
 		authorizedRoles, rolesErr := saml.GetAuthorizedRoles(&samlAssertion)
 		if rolesErr != nil {
 			log.Fatalf("Unable to get authorized roles: %s", rolesErr)
 			os.Exit(1)
 		}
+
+		log.Debug("Parsed authorized roles from SAML assertion")
 
 		// Build a map of profile names to profiles
 		validProfiles := make(map[string]*ini.Section)
@@ -74,6 +78,8 @@ var refreshProfilesCmd = &cobra.Command{
 			log.Fatalf("Unable to get credentials file: %s", getFileError)
 			os.Exit(1)
 		}
+
+		log.Debug("Updating credentials file with authorized roles from IdP")
 
 		for _, role := range authorizedRoles {
 			// Parse out the ARN string
@@ -88,6 +94,8 @@ var refreshProfilesCmd = &cobra.Command{
 
 			// The default profile name is the account id + rolename
 			profileName := parsedARN.Account + roleName
+
+			log.Debugf("Processing profile: %s", profileName)
 
 			// This is the configuration file key for the account metadata
 			accountConfigurationKey := "Accounts." + parsedARN.Account
@@ -112,15 +120,19 @@ var refreshProfilesCmd = &cobra.Command{
 			// Grab the profile if it already exists
 			section, sectionErr := credentialsFile.GetSection(profileName)
 			if sectionErr != nil {
+				log.Debugf("Adding profile to credentials file: %s", profileName)
+
 				// The profile didn't exist, so let's create it
 				section, sectionErr = credentialsFile.NewSection(profileName)
 				if sectionErr != nil {
-					log.Fatalf("Error creating new section %s: %s", profileName, sectionErr)
+					log.Fatalf("Error creating new profile %s: %s", profileName, sectionErr)
 					os.Exit(1)
 				}
 			}
 
 			if forceRefresh || aws.HasProfileExpired(section) {
+				log.Debugf("Refreshing profile: %s", profileName)
+
 				// Delete anything that was there to eliminate any kruft
 				credentialsFile.DeleteSection(section.Name())
 
@@ -135,7 +147,7 @@ var refreshProfilesCmd = &cobra.Command{
 					// Create a fresh new section
 					section, err = credentialsFile.NewSection(profileName)
 					if err != nil {
-						log.Fatalf("Error creating new section %s: %s", profileName, err)
+						log.Fatalf("Error creating new profile %s: %s", profileName, err)
 					}
 
 					// Store the role credentials in the profile section
