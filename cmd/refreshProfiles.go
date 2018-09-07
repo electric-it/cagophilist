@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"encoding/base64"
 	"os"
 	"strings"
 	"time"
@@ -52,16 +53,22 @@ var refreshProfilesCmd = &cobra.Command{
 		}
 
 		// Get a SAML assertion that we can use with the STS
-		samlAssertion, samlAssertionErr := saml.GetSAMLAssertion()
+		samlAssertionBase64, samlAssertionErr := saml.GetSAMLAssertionBase64()
 		if samlAssertionErr != nil {
 			log.Fatalf("Unable to get SAML assertion: %s", samlAssertionErr)
 			os.Exit(1)
 		}
 
-		log.Debug("Retrieved SAML assertion from IdP")
+		log.Debug("Retrieved SAML assertion from IdP:")
+		samlAssertion, err := base64.StdEncoding.DecodeString(samlAssertionBase64)
+		if err != nil {
+			log.Errorf("Error decoding SAML assertion: %s", err)
+			os.Exit(1)
+		}
+		log.Debug(string(samlAssertion))
 
 		// Grab the list of authorized roles from the IdP
-		authorizedRoles, rolesErr := saml.GetAuthorizedRoles(&samlAssertion)
+		authorizedRoles, rolesErr := saml.GetAuthorizedRoles(samlAssertionBase64)
 		if rolesErr != nil {
 			log.Fatalf("Unable to get authorized roles: %s", rolesErr)
 			os.Exit(1)
@@ -138,7 +145,7 @@ var refreshProfilesCmd = &cobra.Command{
 
 				log.Debugf("Assuming (%s) with principal (%s)", role.RoleARN, role.PrincipalARN)
 
-				assumeRoleOutput, err := assumeRole(&role.PrincipalARN, &role.RoleARN, &samlAssertion)
+				assumeRoleOutput, err := assumeRole(role.PrincipalARN, role.RoleARN, samlAssertionBase64)
 				if err != nil {
 					log.Errorf("Error assuming (%s) with principal (%s): %s", role.RoleARN, role.PrincipalARN, err)
 				} else {
@@ -248,14 +255,14 @@ func init() {
 	RootCmd.AddCommand(refreshProfilesCmd)
 }
 
-func assumeRole(principalArn *string, roleArn *string, SAMLAssertion *string) (*sts.AssumeRoleWithSAMLOutput, error) {
+func assumeRole(principalArn string, roleArn string, samlAssertionBase64 string) (*sts.AssumeRoleWithSAMLOutput, error) {
 	sess := session.Must(session.NewSession())
 	svc := sts.New(sess)
 
 	params := &sts.AssumeRoleWithSAMLInput{
-		PrincipalArn:  principalArn,
-		RoleArn:       roleArn,
-		SAMLAssertion: SAMLAssertion,
+		PrincipalArn:  &principalArn,
+		RoleArn:       &roleArn,
+		SAMLAssertion: &samlAssertionBase64,
 	}
 
 	//  Don't fail here, simply return the error if there is one

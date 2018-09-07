@@ -24,6 +24,9 @@
 #   go-tests = true
 #   unused-packages = true
 
+[prune]
+  go-tests = true
+  unused-packages = true
 
 [[constraint]]
   name = "github.com/AlecAivazis/survey"
@@ -54,12 +57,12 @@
   version = "1.38.1"
 
 [[constraint]]
-  branch = "master"
   name = "github.com/mitchellh/go-homedir"
+  branch = "master"
 
 [[constraint]]
-  branch = "master"
   name = "github.com/monochromegane/go-home"
+  branch = "master"
 
 [[constraint]]
   name = "github.com/pkg/errors"
@@ -74,21 +77,9 @@
   version = "1.1.0"
 
 [[constraint]]
-  branch = "master"
   name = "github.com/zalando/go-keyring"
-
-[[constraint]]
   branch = "master"
+
+[[constraint]]
   name = "golang.org/x/net"
-
-[prune]
-  go-tests = true
-  unused-packages = true
-
-[[constraint]]
-  name = "github.com/kr/pretty"
-  version = "0.1.0"
-
-[[constraint]]
-  name = "github.com/alecthomas/gometalinter"
-  version = "2.0.5"
+  branch = "master"

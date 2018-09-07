@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"net/http"
+	"net/http/httputil"
 	"net/url"
 	"os"
 	"strings"
@@ -16,12 +17,11 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/apex/log"
 	"github.com/beevik/etree"
-	"github.com/kr/pretty"
 	"github.com/spf13/viper"
 )
 
-// GetSAMLAssertion Asks the user for their credentials and then retrieves the SAML assertion from the IdP
-func GetSAMLAssertion() (string, error) {
+// GetSAMLAssertionBase64 Asks the user for their credentials and then retrieves the SAML assertion from the IdP
+func GetSAMLAssertionBase64() (string, error) {
 	username := getUsername()
 	password := getPassword()
 
@@ -35,7 +35,9 @@ func GetSAMLAssertion() (string, error) {
 	form.Add("password", password)
 	form.Add("TARGET", viper.GetString("TargetUrl"))
 
-	req, err := http.NewRequest("POST", viper.GetString("AuthenticationUrl"), strings.NewReader(form.Encode()))
+	authenticationURL := viper.GetString("AuthenticationUrl")
+
+	req, err := http.NewRequest("POST", authenticationURL, strings.NewReader(form.Encode()))
 	if err != nil {
 		log.Fatalf("Error creating new request: %s", err)
 		os.Exit(1)
@@ -43,13 +45,23 @@ func GetSAMLAssertion() (string, error) {
 
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
+	log.Debugf("Posting credentials to the IdP: %s", authenticationURL)
+
 	res, err := httpClient.Do(req)
 	if err != nil {
 		log.Fatalf("Error posting to IdP: %s", err)
 		os.Exit(1)
 	}
 
-	log.Debugf("Status from the IdP: %v", res.Status)
+	log.Debug("Response from the IdP:")
+
+	dump, dumpResponseError := httputil.DumpResponse(res, true)
+	if dumpResponseError != nil {
+		log.Fatalf("Error dumping response from IdP: %s", dumpResponseError)
+		os.Exit(1)
+	}
+
+	log.Debugf("%q", dump)
 
 	doc, err := goquery.NewDocumentFromReader(res.Body)
 	if err != nil {
@@ -57,20 +69,18 @@ func GetSAMLAssertion() (string, error) {
 		os.Exit(1)
 	}
 
-	samlAssertionBase64, ok := doc.Find("input[name='SAMLResponse']").Attr("value")
-	if !ok {
-		log.Debug(pretty.Sprint(doc.Html()))
-
+	samlAssertionBase64, exists := doc.Find("input[name='SAMLResponse']").Attr("value")
+	if !exists {
 		log.Fatalf("Unable to locate SAMLResponse!")
 		os.Exit(1)
 	}
 
-	return samlAssertionBase64[:], nil
+	return samlAssertionBase64, nil
 }
 
 // GetAuthorizedRoles Returns a list of all roles the uers is authorized to assume
-func GetAuthorizedRoles(samlAssertionBase64 *string) ([]*aws.Role, error) {
-	samlAssertion, err := base64.StdEncoding.DecodeString(*samlAssertionBase64)
+func GetAuthorizedRoles(samlAssertionBase64 string) ([]*aws.Role, error) {
+	samlAssertion, err := base64.StdEncoding.DecodeString(samlAssertionBase64)
 	if err != nil {
 		log.Errorf("Error decoding SAML assertion: %s", err)
 		return nil, err
