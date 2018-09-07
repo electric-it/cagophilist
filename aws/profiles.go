@@ -85,6 +85,8 @@ func GetAllManagedProfileNames() []string {
 		os.Exit(1)
 	}
 
+	log.Debug("Reading existing profiles from credentials file")
+
 	// Grab a list of all the sections in the credentials file
 	allProfiles := credentialsFile.Sections()
 	var profileNames []string
