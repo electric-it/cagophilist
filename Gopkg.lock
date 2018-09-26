@@ -105,6 +105,14 @@
   version = "v1.4.7"
 
 [[projects]]
+  digest = "1:aacef5f5e45685f2aeda5534d0a750dee6859de7e9088cdd06192787bb01ae6d"
+  name = "github.com/go-errors/errors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "a6af135bd4e28680facf08a3d206b454abc877a4"
+  version = "v1.0.1"
+
+[[projects]]
   digest = "1:5abd6a22805b1919f6a6bca0ae58b13cef1f3412812f38569978f43ef02743d4"
   name = "github.com/go-ini/ini"
   packages = ["."]
@@ -195,12 +203,12 @@
   revision = "9520e82c474b0a04dd04f8a40959027271bab992"
 
 [[projects]]
-  branch = "master"
   digest = "1:78bbb1ba5b7c3f2ed0ea1eab57bdd3859aec7e177811563edc41198a760b06af"
   name = "github.com/mitchellh/go-homedir"
   packages = ["."]
   pruneopts = "UT"
   revision = "ae18d6b8b3205b561c79e8e5f69bff09736185f4"
+  version = "v1.0.0"
 
 [[projects]]
   digest = "1:645110e089152bd0f4a011a2648fbb0e4df5977be73ca605781157ac297f50c4"
@@ -284,6 +292,29 @@
   pruneopts = "UT"
   revision = "8fb642006536c8d3760c99d4fa2389f5e2205631"
   version = "v1.2.0"
+
+[[projects]]
+  digest = "1:75d447ee7c6dfa97f31adfb4f03ce64edfbac3b5b92cebaee708c590d7069ee8"
+  name = "github.com/thanhpk/baseconv"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "ecdb2bce436580b7af32bd93f569dddadf3a0d4c"
+
+[[projects]]
+  digest = "1:a969535cd4d6de7d9a37be26016474318cfd13ac5ee99e9ca3df0f3230fc6d87"
+  name = "github.com/thanhpk/randstr"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "5d341746266631ff6a4bae01c59d360b803140c4"
+  version = "v1.0.2"
+
+[[projects]]
+  digest = "1:92d68f6e77198b5da8d32e13283d75d2ba4fe01f369bc63cdf48c77cc138bfaf"
+  name = "github.com/thoas/go-funk"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "e2f8da694c9c4fa123eea42cb0d6d47e08f11ff6"
+  version = "0.3"
 
 [[projects]]
   branch = "master"
@@ -371,12 +402,14 @@
     "github.com/aws/aws-sdk-go/service/sts",
     "github.com/beevik/etree",
     "github.com/cavaliercoder/grab",
+    "github.com/go-errors/errors",
     "github.com/go-ini/ini",
     "github.com/mitchellh/go-homedir",
     "github.com/monochromegane/go-home",
-    "github.com/pkg/errors",
     "github.com/spf13/cobra",
     "github.com/spf13/viper",
+    "github.com/thanhpk/randstr",
+    "github.com/thoas/go-funk",
     "github.com/zalando/go-keyring",
     "golang.org/x/net/publicsuffix",
   ]
