@@ -51,17 +51,17 @@ docs:
 	doctoc README.md --maxlevel 1
 
 .PHONY: lint
-lint: clean
+lint: banner clean
 	@printf "\n==> Installing Go metalinter\n"
-	go get -u gopkg.in/alecthomas/gometalinter.v2
+	curl -L https://git.io/vp6lP | sh
 	@printf "\n==> Installing linters\n"
-	gometalinter.v2 --install
+	gometalinter --install
 	@printf "\n==> Running linters\n"
-	gometalinter.v2 --deadline 5m --vendor ./...
+	gometalinter --deadline 5m --vendor ./...
 	@printf "\n==> Done linting\n"
 
 .PHONY: build
-build: banner clean lint
+build: banner clean
 	@printf "\n==> Building local executable\n"
 	@go build -o cago
 	@printf "\n==> Done building local executable\n"
