@@ -1,11 +1,13 @@
-package cmd
+package cmd // import "electric-it.io/cago"
 
 import (
 	"fmt"
+	"os"
 
-	"github.com/electric-it/cagophilist/aws"
-
+	"github.com/apex/log"
 	"github.com/spf13/cobra"
+
+	"electric-it.io/cago/aws"
 )
 
 // listProfilesCmd represents the list-profiles command

@@ -1,4 +1,4 @@
-package saml
+package saml // import "electric-it.io/cago"
 
 import (
 	"encoding/base64"
@@ -9,15 +9,15 @@ import (
 	"os"
 	"strings"
 
-	"github.com/electric-it/cagophilist/aws"
-	"github.com/electric-it/cagophilist/credentials"
-	"github.com/electric-it/cagophilist/lib"
-
 	"github.com/AlecAivazis/survey"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/apex/log"
 	"github.com/beevik/etree"
 	"github.com/spf13/viper"
+
+	"electric-it.io/cago/aws"
+	"electric-it.io/cago/credentials"
+	"electric-it.io/cago/net"
 )
 
 // GetSAMLAssertionBase64 Asks the user for their credentials and then retrieves the SAML assertion from the IdP

@@ -1,4 +1,4 @@
-package cmd
+package cmd // import "electric-it.io/cago"
 
 import (
 	"fmt"

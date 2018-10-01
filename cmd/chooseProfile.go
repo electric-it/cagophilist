@@ -1,4 +1,4 @@
-package cmd
+package cmd // import "electric-it.io/cago"
 
 import (
 	"fmt"
@@ -6,12 +6,13 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/electric-it/cagophilist/aws"
-
 	"github.com/AlecAivazis/survey"
 	"github.com/apex/log"
-	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
+
+	homedir "github.com/mitchellh/go-homedir"
+
+	"electric-it.io/cago/aws"
 )
 
 const (

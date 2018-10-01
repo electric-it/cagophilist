@@ -1,9 +1,8 @@
-package credentials
+package credentials // import "electric-it.io/cago"
 
 import (
-	"github.com/zalando/go-keyring"
-
 	"github.com/apex/log"
+	"github.com/zalando/go-keyring"
 )
 
 // SetPassword stores the password in the OS credential store
