@@ -16,7 +16,11 @@ var listProfilesCmd = &cobra.Command{
 	Short: "List the available profiles",
 	Long:  ``,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		profileNames := aws.GetAllManagedProfileNames()
+		profileNames, getAllManagedProfileNamesError := aws.GetAllManagedProfileNames()
+		if getAllManagedProfileNamesError != nil {
+			log.Errorf("Unable to retrieve profile names: %v", getAllManagedProfileNamesError)
+			os.Exit(1)
+		}
 
 		for _, profileName := range profileNames {
 			// This must go to stdout
