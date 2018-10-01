@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package main // import "electric-it.io/cago"
 
 import (
 	"github.com/electric-it/cagophilist/cmd"

@@ -1,16 +1,15 @@
-package cmd
+package cmd // import "electric-it.io/cago"
 
 import (
 	"os"
 	"path/filepath"
 
+	"github.com/apex/log"
+	"github.com/apex/log/handlers/cli"
 	"github.com/cavaliercoder/grab"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-
-	"github.com/apex/log"
-	"github.com/apex/log/handlers/cli"
 )
 
 const (

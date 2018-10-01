@@ -58,15 +58,11 @@
 
 [[constraint]]
   name = "github.com/mitchellh/go-homedir"
-  branch = "master"
+  version = "1.0.0"
 
 [[constraint]]
   name = "github.com/monochromegane/go-home"
   branch = "master"
-
-[[constraint]]
-  name = "github.com/pkg/errors"
-  version = "0.8.0"
 
 [[constraint]]
   name = "github.com/spf13/cobra"
@@ -83,3 +79,15 @@
 [[constraint]]
   name = "golang.org/x/net"
   branch = "master"
+
+[[constraint]]
+  name = "github.com/go-errors/errors"
+  version = "1.0.1"
+
+[[constraint]]
+  name = "github.com/thanhpk/randstr"
+  version = "1.0.2"
+
+[[constraint]]
+  name = "github.com/thoas/go-funk"
+  version = "0.3.0"

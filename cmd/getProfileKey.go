@@ -1,13 +1,13 @@
-package cmd
+package cmd // import "electric-it.io/cago"
 
 import (
 	"fmt"
 	"os"
 
-	"github.com/electric-it/cagophilist/aws"
-
 	"github.com/apex/log"
 	"github.com/spf13/cobra"
+
+	"electric-it.io/cago/aws"
 )
 
 // getAccessKeyIdCmd represents the getAccessKeyId command
@@ -25,7 +25,7 @@ var getProfileKeyCmd = &cobra.Command{
 
 		log.Debugf("Getting key (%s) from profile (%s)", keyName, profileName)
 
-		keyValue, err := aws.GetProfileKey(profileName, keyName)
+		keyValue, err := aws.GetKeyValue(profileName, keyName)
 		if err != nil {
 			log.Errorf("Unable to find key (%s) in profile (%s): %s", keyName, profileName, err)
 			os.Exit(1)

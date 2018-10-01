@@ -1,4 +1,4 @@
-package aws
+package aws // import "electric-it.io/cago"
 
 // Original Source: https://github.com/Versent/saml2aws
 // Original License:

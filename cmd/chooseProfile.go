@@ -1,4 +1,4 @@
-package cmd
+package cmd // import "electric-it.io/cago"
 
 import (
 	"fmt"
@@ -6,12 +6,13 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/electric-it/cagophilist/aws"
-
 	"github.com/AlecAivazis/survey"
 	"github.com/apex/log"
-	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
+
+	homedir "github.com/mitchellh/go-homedir"
+
+	"electric-it.io/cago/aws"
 )
 
 const (
@@ -25,7 +26,10 @@ var chooseProfileCmd = &cobra.Command{
 	Short: "Choose from a list of Cago managed profiles and return the chosen profile to stdout",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		profileNames := aws.GetAllManagedProfileNames()
+		profileNames, getAllManagedProfileNamesError := aws.GetAllManagedProfileNames()
+		if getAllManagedProfileNamesError != nil {
+			log.Fatalf("Error while retrieving profile names")
+		}
 
 		if len(profileNames) == 0 {
 			log.Fatalf("No managed profiles found! You probably should do a refresh.")

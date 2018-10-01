@@ -1,4 +1,4 @@
-package lib
+package net // import "electric-it.io/cago"
 
 import (
 	"crypto/tls"
@@ -13,30 +13,22 @@ import (
 	"golang.org/x/net/publicsuffix"
 )
 
-var (
-	httpClient *http.Client
-)
-
 // GetHTTPClient returns the HTTP client that should be used in Cago
 func GetHTTPClient() *http.Client {
-	// Lazy initialize the HTTP client
-	if httpClient == nil {
-		// Initialize the default transport
-		initDefaultTransport()
+	// Initialize the default transport
+	initDefaultTransport()
 
-		options := &cookiejar.Options{
-			PublicSuffixList: publicsuffix.List,
-		}
+	options := &cookiejar.Options{
+		PublicSuffixList: publicsuffix.List,
+	}
 
-		jar, err := cookiejar.New(options)
-		if err != nil {
-			log.Fatalf("Error creating new cookie jar: %s", err)
-			os.Exit(1)
-		}
+	jar, newCookieJarError := cookiejar.New(options)
+	if newCookieJarError != nil {
+		log.Fatalf("Error creating new cookie jar: %s", newCookieJarError)
+	}
 
-		httpClient = &http.Client{
-			Jar: jar,
-		}
+	httpClient := &http.Client{
+		Jar: jar,
 	}
 
 	return httpClient
