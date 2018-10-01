@@ -24,8 +24,8 @@
 
 // Source https://github.com/remind101/empire/blob/master/pkg/arn/arn.go
 
-// Package lib is a Go package for parsing Amazon Resource Names.
-package lib
+// Package aws is a Go package for parsing Amazon Resource Names.
+package aws // import "electric-it.io/cago"
 
 import (
 	"errors"

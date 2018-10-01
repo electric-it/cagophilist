@@ -25,7 +25,7 @@ func GetSAMLAssertionBase64() (string, error) {
 	username := getUsername()
 	password := getPassword()
 
-	httpClient := lib.GetHTTPClient()
+	httpClient := net.GetHTTPClient()
 
 	// Some fancy trickery to figure out if authentication failed
 	httpClient.CheckRedirect = checkRedirect
