@@ -15,7 +15,7 @@ var (
 var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Print the version number of Cago",
-	Long:  `This is my version. There are many like it, but this one is mine.`,
+	Long:  `This is my version of Cago. There are many like it, but this one is mine.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println(Version)
 	},
