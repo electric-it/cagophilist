@@ -71,7 +71,7 @@ func ParseARN(arn string) (*ARN, error) {
 	}
 
 	// ARN's always start with "arn:aws" (hopefully).
-	if a.ARN != "arn" || a.AWS != "aws" {
+	if a.ARN != "arn" || (a.AWS != "aws" && a.AWS != "aws-us-gov") {
 		return nil, ErrInvalidARN
 	}
 
