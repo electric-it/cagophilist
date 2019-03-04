@@ -1,3 +1,0 @@
-# Exceptions for https://github.com/awslabs/git-secrets
-*.GO15VENDOREXPERIMENT*.
-*.SIOCBONDCHANGEACTIVE*.
